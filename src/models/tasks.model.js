@@ -7,3 +7,5 @@ export const Tasks = sequelize.define("tasks", {
     description: {type: DataTypes.STRING(100), allowNull: false},
     isComplete: {type: DataTypes.BOOLEAN, default: false}
 });
+
+export default Tasks;

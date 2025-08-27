@@ -1,18 +1,19 @@
-import { Routes } from "express";
+import { Router } from "express";
 import {
-    getUsers,
     getAllUsers,
     createUsers,
+    deleteUsers,
     updateUsers,
-    deleteUsers
+    getUsersById,
 } from "../controllers/users.controller.js";
+//import { update } from "lodash";
 
-const usersRoutes = Routes();
+const router = Router();
 
-usersRoutes.get("/users/:id", getUsers);
-usersRoutes.put("/users/:id", updateUsers);
-usersRoutes.post("/users", createUsers);
-usersRoutes.get("/users", getAllUsers);
-usersRoutes.delete("/users/:id", deleteUsers);
+router.get("/", getAllUsers);
+router.put("/:id", updateUsers);
+router.post("/", createUsers);
+router.get("/:id", getUsersById);
+router.delete("/:id", deleteUsers);
 
-export default usersRoutes;
+export default router ;
