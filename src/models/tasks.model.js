@@ -9,3 +9,4 @@ export const Tasks = sequelize.define("tasks", {
 });
 
 export default Tasks;
+

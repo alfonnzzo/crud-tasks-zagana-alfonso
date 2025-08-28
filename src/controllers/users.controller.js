@@ -1,5 +1,4 @@
 import { Users } from "../models/users.model.js";
-import { Op } from "sequelize";
 
 // Obtener usuario por ID
 export const getUsersById = async (req, res) => {
