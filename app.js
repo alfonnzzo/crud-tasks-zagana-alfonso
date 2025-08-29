@@ -1,7 +1,7 @@
 import express from "express";
 import { startDB } from "./src/config/database.js"; 
 import dotenv from "dotenv";
-import tasksRoutes from "./src/routes/tasks.routes.js";
+import tasksRoutes from "./src/routes/task.routes.js";
 //import usersRoutes from "./src/routes/users.routes.js";
 
 dotenv.config();
@@ -18,8 +18,6 @@ const PORT = process.env.PORT || 3000;
     res.send("Bienvenido a crud");
  });
 // app.use("/api", usersRoutes);
-
-
 
 app.listen(PORT, async ()=>{
     await startDB ();
