@@ -5,8 +5,7 @@ import {
     deleteUsers,
     updateUsers,
     getUsersById,
-} from "../controllers/users.controller.js";
-//import { update } from "lodash";
+} from "../controllers/user.controller.js";
 
 const router = Router();
 

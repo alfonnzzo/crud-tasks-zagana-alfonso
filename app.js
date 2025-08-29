@@ -1,27 +1,39 @@
-import express from "express";
-import { startDB } from "./src/config/database.js"; 
-import dotenv from "dotenv";
-import tasksRoutes from "./src/routes/tasks.routes.js";
-//import usersRoutes from "./src/routes/users.routes.js";
+import express from "express"; 
+import "dotenv/config" 
+import tasksRoutes from "./src/routes/task.routes.js";
+import usersRoutes from "./src/routes/user.routes.js";
+import rolsRoutes from "./src/routes/role.routes.js";
+import documentRoutes from "./src/routes/document.routes.js";
+import { startDb } from "./src/config/database.js";
 
-dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
- app.use(express.json());
-
- app.use("/api/tasks", tasksRoutes );
-  app.use("/api/users", tasksRoutes );
- 
- app.get("/", (req, res ) => {
-    res.send("Bienvenido a crud");
- });
-// app.use("/api", usersRoutes);
+app.use(express.json()); 
+app.set("json spaces", 2); //para que los json se vean mas prolijos
 
 
+app.use("/api", tasksRoutes);
+app.use("/api", usersRoutes);
 
-app.listen(PORT, async ()=>{
-    await startDB ();
-    console.log(` Servidor en funcionamiento. ${PORT} `)
+//rutas nuevas
+app.use("/api", rolsRoutes);
+app.use("/api", documentRoutes);
+
+const startServer = async () => {
+     await startDb(); 
+     console.log("Tablas creadas");
+     
+}
+
+app.get("/", (req, res) =>  {
+  res.send ("Servidor listo")
+
+})
+
+app.listen(PORT, async () => {
+  console.log(`El server está corriendo en:  http://localhost:${PORT}`);
 });
+
+startServer();

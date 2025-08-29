@@ -1,4 +1,4 @@
-import { Users } from "../models/users.model.js";
+import { Users } from "../models/user.model.js";
 
 // Obtener usuario por ID
 export const getUsersById = async (req, res) => {
