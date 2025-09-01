@@ -1,15 +1,30 @@
 import sequelize from "../config/database.js";
 import { DataTypes } from "sequelize";
 
-export const Roles = sequelize.define("Roles", {
+export const user_roles = sequelize.define("user_roles", {
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER, 
+        primaryKey: true,
         autoIncrement: true,
-        primaryKey: true
+        unique: true,
     },
-    name: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        unique: true
+
+    user_id: {
+        type: DataTypes.INTEGER, 
+        references: {
+            model: "User",
+            key: "id",
+        },  
+    },
+
+    role_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "Roles",
+            key: "id",
+        },
     }
+}, {
+    tableName: "user_roles",
+    timestamps: false,
 });

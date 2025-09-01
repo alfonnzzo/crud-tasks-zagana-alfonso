@@ -1,4 +1,3 @@
-import { Users } from "../models/user.model.js";
 import { Documento } from "../models/document.model.js";
 
 export const createDocumento = async (req, res) => {

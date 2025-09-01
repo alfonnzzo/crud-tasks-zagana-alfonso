@@ -8,4 +8,30 @@ export const Users = sequelize.define("users", {
     isComplete: {type: DataTypes.BOOLEAN, default: false}
 });
 
+
+User.hasOne(Documento, {
+  foreignKey: "author_id",
+  as: "documento", 
+  onDelete: "CASCADE" 
+});
+
+Documento.belongsTo(User, {
+  foreignKey: "author_id",
+  as: "user"
+})
+
+User.belongsToMany(Roles, {
+  through: user_roles, 
+  foreignKey: "user_id",  
+  otherKey: "role_id",   
+  timestamps: false
+});
+
+
+Roles.belongsToMany(User, {
+  through: user_roles,
+  foreignKey: "role_id",   
+  otherKey: "user_id"      
+});
+
 export default Users;

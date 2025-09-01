@@ -8,5 +8,16 @@ export const Tasks = sequelize.define("tasks", {
     isComplete: {type: DataTypes.BOOLEAN, default: false}
 });
 
+
+User.hasMany(Task,{
+  foreignKey: "author_id", 
+  as: "tasks" 
+});
+
+Task.belongsTo(User,{
+  foreignKey: "author_id", 
+  as: "author"
+});
+
 export default Tasks;
 
