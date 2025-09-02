@@ -1,15 +1,14 @@
-import {sequelize} from "../config/database.js";
 import { DataTypes } from "sequelize";
+import { sequelize } from "../config/database.js";
 
-export const userModel = sequelize.define(
-  'User',
+export const personModel = sequelize.define(
+  'Person',
   {
-    email: {
+    first_name: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      unique:true,
     },
-    password: {
+    last_name: {
       type: DataTypes.STRING(100),
       allowNull:false,
     },
@@ -18,5 +17,3 @@ export const userModel = sequelize.define(
     // Other model options go here
   },
 );
-
-

@@ -1,11 +1,12 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
+import {sequelize} from "../config/database.js";
 
 export const user_roles = sequelize.define("user_roles", {
     id: {
         type: DataTypes.INTEGER, 
         primaryKey: true,
         autoIncrement: true,
+        unique:true,
     },
 
     user_id: {
