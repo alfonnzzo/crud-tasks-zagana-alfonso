@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { createRol, getAllRoles } from "../controllers/role.controller.js";
 
-const router = Router();
+const roleRouter = Router();
 
-router.post("/create-rol", createRol);
-router.get("/roles", getAllRoles);
+roleRouter.post("/roles", createRol);
+roleRouter.get("/roles", getAllRoles);
 
-export default router;
+export default roleRouter;

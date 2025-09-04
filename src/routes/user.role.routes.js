@@ -1,9 +1,9 @@
 import express from "express";
-import { assignRole, getUserRoles } from "../controllers/user.role.controllers";
+import { assignRole, getUserRoles } from "../controllers/user.role.controller.js";
 
-const router = express.Router();
+const userRoleRouter = express.Router();
 
-router.post("/assign", assignRole);
-router.get("/:user_id", getUserRoles);
+userRoleRouter.post("/user-role", assignRole);
+userRoleRouter.get("/:user-role", getUserRoles);
 
-export default router;
+export default userRoleRouter;

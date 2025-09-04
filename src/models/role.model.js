@@ -1,8 +1,8 @@
 import {sequelize} from "../config/database.js";
 import { DataTypes } from "sequelize";
 
-export const roleModel = sequelize.define(
-  'Roles',
+const Role = sequelize.define(
+  'Role',
   {
     rol_name: {
       type: DataTypes.STRING,
@@ -13,3 +13,5 @@ export const roleModel = sequelize.define(
   {
   },
 );
+
+export default Role;

@@ -10,6 +10,7 @@ export const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER,
 export const connectDB = async () => {
   try {
     await sequelize.authenticate();
+    await sequelize.sync({alter : true});
     console.log("base de datos conectada")
       // await sequelize.sync ();  
       // console.log("Las tablas está sincronizadas correctamente.");

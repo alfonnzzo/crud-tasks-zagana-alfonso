@@ -1,4 +1,4 @@
-import { personModel } from "../models/person.model";
+import Person from "../models/person.model.js";
 
 // Crear persona
 export const createPerson = async (req, res) => {
@@ -9,12 +9,12 @@ export const createPerson = async (req, res) => {
   }
 
   try {
-    const exists = await personModel.findOne({ where: { email } });
+    const exists = await Person.findOne({ where: { email } });
     if (exists) {
       return res.status(400).json({ msg: "El email ya está registrado" });
     }
 
-    const person = await personModel.create({ firstName, lastName, age, email });
+    const person = await Person.create({ firstName, lastName, age, email });
     return res.status(201).json(person);
   } catch (error) {
     console.error("createPerson :: error al crear persona:", error);
@@ -25,7 +25,7 @@ export const createPerson = async (req, res) => {
 // Obtener todas las personas
 export const getAllPersons = async (req, res) => {
   try {
-    const persons = await personModel.findAll();
+    const persons = await Person.findAll();
     return res.status(200).json(persons);
   } catch (error) {
     console.error("getAllPersons :: error al listar personas:", error);
@@ -37,7 +37,7 @@ export const getAllPersons = async (req, res) => {
 export const getPersonById = async (req, res) => {
   const { id } = req.params;
   try {
-    const person = await personModel.findByPk(id);
+    const person = await Person.findByPk(id);
     if (!person) {
       return res.status(404).json({ msg: "Persona no encontrada" });
     }
@@ -54,7 +54,7 @@ export const updatePerson = async (req, res) => {
   const { firstName, lastName, age, email } = req.body;
 
   try {
-    const person = await personModel.findByPk(id);
+    const person = await Person.findByPk(id);
     if (!person) {
       return res.status(404).json({ msg: "Persona no encontrada" });
     }
@@ -85,7 +85,7 @@ export const deletePerson = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const person = await personModel.findByPk(id);
+    const person = await Person.findByPk(id);
     if (!person) {
       return res.status(404).json({ msg: "Persona no encontrada" });
     }

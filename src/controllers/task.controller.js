@@ -1,9 +1,9 @@
-import { Tasks } from "../models/task.model.js";
+import Task from "../models/task.model.js";
 
 // Obtener todas las tareas
 export const getAllTasks = async (req, res) => {
   try {
-    const tasks = await Tasks.findAll();
+    const tasks = await Task.findAll();
     res.json(tasks);
   } catch (error) {
     console.error(error);
@@ -15,7 +15,7 @@ export const getAllTasks = async (req, res) => {
 export const getTaskById = async (req, res) => {
   const { id } = req.params;
   try {
-    const task = await Tasks.findByPk(id);
+    const task = await Task.findByPk(id);
     if (!task) {
       return res.status(404).json({ msg: "Tarea no encontrada" });
     }
@@ -27,7 +27,7 @@ export const getTaskById = async (req, res) => {
 };
 
 // Crear tarea
-export const createTasks = async (req, res) => {
+export const createTask = async (req, res) => {
   let { title, description, isComplete } = req.body;
 
   if (!title?.trim() || !description?.trim()) {
@@ -37,25 +37,21 @@ export const createTasks = async (req, res) => {
   // Validar isComplete
   if (isComplete !== undefined) {
     if (typeof isComplete === "string") {
-      if (isComplete.toLowerCase() === "true") {
-        isComplete = true;
-      } else if (isComplete.toLowerCase() === "false") {
-        isComplete = false;
-      } else {
-        return res.status(400).json({ msg: "isComplete debe ser true o false" });
-      }
+      if (isComplete.toLowerCase() === "true") isComplete = true;
+      else if (isComplete.toLowerCase() === "false") isComplete = false;
+      else return res.status(400).json({ msg: "isComplete debe ser true o false" });
     } else if (typeof isComplete !== "boolean") {
       return res.status(400).json({ msg: "isComplete debe ser booleano" });
     }
   }
 
   try {
-    const existing = await Tasks.findOne({ where: { title } });
+    const existing = await Task.findOne({ where: { title } });
     if (existing) {
       return res.status(400).json({ msg: "Ese título ya está en uso." });
     }
 
-    const task = await Tasks.create({ title, description, isComplete });
+    const task = await Task.create({ title, description, isComplete });
     res.status(201).json(task);
   } catch (error) {
     console.error(error);
@@ -64,12 +60,12 @@ export const createTasks = async (req, res) => {
 };
 
 // Actualizar tarea
-export const updateTasks = async (req, res) => {
+export const updateTask = async (req, res) => {
   const { id } = req.params;
   let { title, description, isComplete } = req.body;
 
   try {
-    const task = await Tasks.findByPk(id);
+    const task = await Task.findByPk(id);
     if (!task) {
       return res.status(404).json({ msg: "Tarea no encontrada" });
     }
@@ -78,7 +74,7 @@ export const updateTasks = async (req, res) => {
       if (!title.trim()) {
         return res.status(400).json({ msg: "El título no puede estar vacío" });
       }
-      const existing = await Tasks.findOne({ where: { title } });
+      const existing = await Task.findOne({ where: { title } });
       if (existing && existing.id !== parseInt(id)) {
         return res.status(400).json({ msg: "Ese título ya está en uso" });
       }
@@ -90,13 +86,9 @@ export const updateTasks = async (req, res) => {
 
     if (isComplete !== undefined) {
       if (typeof isComplete === "string") {
-        if (isComplete.toLowerCase() === "true") {
-          isComplete = true;
-        } else if (isComplete.toLowerCase() === "false") {
-          isComplete = false;
-        } else {
-          return res.status(400).json({ msg: "isComplete debe ser true o false" });
-        }
+        if (isComplete.toLowerCase() === "true") isComplete = true;
+        else if (isComplete.toLowerCase() === "false") isComplete = false;
+        else return res.status(400).json({ msg: "isComplete debe ser true o false" });
       } else if (typeof isComplete !== "boolean") {
         return res.status(400).json({ msg: "isComplete debe ser booleano" });
       }
@@ -116,11 +108,11 @@ export const updateTasks = async (req, res) => {
 };
 
 // Eliminar tarea
-export const deleteTasks = async (req, res) => {
+export const deleteTask = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const task = await Tasks.findByPk(id);
+    const task = await Task.findByPk(id);
 
     if (!task) {
       return res.status(404).json({ msg: "Tarea no encontrada" });

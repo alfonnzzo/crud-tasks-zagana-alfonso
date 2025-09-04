@@ -1,7 +1,7 @@
 import {sequelize} from "../config/database.js";
 import { DataTypes } from "sequelize";
 
-export const taskModel = sequelize.define(
+const Task = sequelize.define(
   'Task',
   {
     title: {
@@ -17,3 +17,4 @@ export const taskModel = sequelize.define(
   },
 );
 
+export default Task;

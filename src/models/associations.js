@@ -1,18 +1,18 @@
-import { userModel } from "./user.model.js";
-import { personModel } from "./person.model.js";
-import { roleModel } from "./role.model.js";
-import { taskModel } from "./task.model.js";
-import { user_roles } from "./user.role.model.js";
+import User from "./user.model.js";
+import Person from "./person.model.js";
+import Role from "./role.model.js";
+import Task from "./task.model.js";
+import userRole from "./user.role.model.js";
 
 // ----------------------------
 // User ↔ Person (1:1)
 // ----------------------------
-personModel.hasOne(userModel, {
+Person.hasOne(User, {
   foreignKey: "person_id",
   as: "user",
 });
 
-userModel.belongsTo(personModel, {
+User.belongsTo(Person, {
   foreignKey: "person_id",
   as: "person",
 });
@@ -20,15 +20,15 @@ userModel.belongsTo(personModel, {
 // ----------------------------
 // User ↔ Roles (N:M) mediante user_roles
 // ----------------------------
-userModel.belongsToMany(roleModel, {
-  through: user_roles,
+User.belongsToMany(Role, {
+  through: userRole,
   foreignKey: "user_id",
   otherKey: "role_id",
   as: "roles",
 });
 
-roleModel.belongsToMany(userModel, {
-  through: user_roles,
+Role.belongsToMany(User, {
+  through: userRole,
   foreignKey: "role_id",
   otherKey: "user_id",
   as: "users",
@@ -37,20 +37,20 @@ roleModel.belongsToMany(userModel, {
 // ----------------------------
 // User ↔ Task (1:N)
 // ----------------------------
-userModel.hasMany(taskModel, {
+User.hasMany(Task, {
   foreignKey: "user_id",
   as: "tasks",
 });
 
-taskModel.belongsTo(userModel, {
+Task.belongsTo(User, {
   foreignKey: "user_id",
   as: "user",
 });
 
 export {
-  userModel,
-  personModel,
-  roleModel,
-  taskModel,
-  user_roles
+  User,
+  Person,
+  Role,
+  Task,
+  userRole
 };

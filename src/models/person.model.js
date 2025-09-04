@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/database.js";
 
-export const personModel = sequelize.define(
+const Person = sequelize.define(
   'Person',
   {
     first_name: {
@@ -17,3 +17,5 @@ export const personModel = sequelize.define(
     // Other model options go here
   },
 );
+
+export default Person;
