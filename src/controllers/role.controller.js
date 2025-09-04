@@ -1,27 +1,29 @@
 import Role from "../models/role.model.js";
+import User from "../models/user.model.js";
 
-export const createRol = async (req, res) => {
-    const { name } = req.body;
-    if (!name) 
-        return res.status(400).json({ message: "Faltan rellenar campos obligatorios"});
+//CRUD 
+
+//Crear un rol
+export const createRole = async (req, res) => {
     try {
-        const exists = await Role.findOne ({ where: { name }});
-        if (exists)
-            return res.status(400).json({ message: "El rol que quiere ingresar ya existe" });
-
+         const { name } = req.body;
         const role = await Role.create({ name });
-        res.status(201).json(role);
+        res
+        .status(201)
+        .json(role);
+
     } catch (error) {
         res.status(500).json({ message: "error al crear un nuevo rol", error })
     }
 }
 
-export const getAllRoles = async (req, res) => {
+//Traer todos los roles 
+export const getAllRole = async (req, res) => {
   try {
     const roles = await Role.findAll({ 
         include: { model: User, 
         through: { 
-            attributes: []
+            attributes: [] //esto es para que no se incluyan los atributos de la tabla intermedia al hacer un include (da un resultado mas limpio)
          } 
     } 
 });
@@ -30,3 +32,49 @@ export const getAllRoles = async (req, res) => {
     res.status(500).json({ msg: "Error al traer roles", error });
   }
 };
+
+//Traer los roles por ID
+export const getRoleById = async (req, res) => {
+     try {
+            const rol = await Role.findByPk(req.params.id);
+            res
+            .json(rol)
+        } catch (error) {
+            res
+            .status(500)
+            .json({ messsage: "Error al buscar el rol deseado"});
+        }
+};
+
+//Actualizar rol
+export const updateRole = async (req, res) => {
+        const { name } = req.body;
+    
+        try{
+            const rol = await Roles.findByPk(req.params.id)
+            await rol.update({
+                name
+            });
+    
+            res
+            .json(rol);
+        } catch (error) {
+            res
+            .status(500)
+            .json({message: "Error al actualizar los datos del rol"})
+        }
+};
+    
+//Eliminar un rol 
+export const deleteRole = async (req, res) => {
+    try {
+        const rol = await Role.findByPk(req.params.id);
+        await rol.destroy() 
+        res
+        .json({ message: "Se eliminó el rol correctamente" })
+    } catch (error) {
+        res
+        .status(500)
+        .json({ message: "Hubo un error al intentar borrar el rol", error })
+    }
+}

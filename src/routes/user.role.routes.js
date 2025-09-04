@@ -1,9 +1,11 @@
 import express from "express";
-import { assignRole, getUserRoles } from "../controllers/user.role.controller.js";
+import { assignRole, getUserRole, getRoleById } from "../controllers/user.role.controller.js";
+import { getUserRoleValidation } from "../middlewares/validations/user.role.validations.js"
 
 const userRoleRouter = express.Router();
 
 userRoleRouter.post("/user-role", assignRole);
-userRoleRouter.get("/:user-role", getUserRoles);
+userRoleRouter.get("/:user-role", getUserRole);
+userRoleRouter.get("/user-role", getUserRoleValidation, getRoleById)
 
 export default userRoleRouter;
